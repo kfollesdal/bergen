@@ -2,7 +2,7 @@ name:                bergen
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/kfollesdal/bergen2#readme
+homepage:            https://github.com/kfollesdal/bergen#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Kristoffer K. Føllesdal
@@ -39,4 +39,4 @@ test-suite bergen-test
 
 source-repository head
   type:     git
-  location: https://github.com/kfollesdal/bergen2
+  location: https://github.com/kfollesdal/bergen
