@@ -1,5 +1,13 @@
+{-|
+Module      : Math.Properties.Operations
+Description : Properties for operations on algebraic structures.
+Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+
+Properties for operations on algebraic structures.
+-}
+
 module Math.Properties.Operations (
-  -- ***
+  -- ** Assosiative law
   -- $asso
   assosiative,
   distributive
