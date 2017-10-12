@@ -17,6 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Math.Monoid
                        Math.Group
+                       Math.Ring
                        Math.Properties.Elements
                        Math.Properties.Operations
   build-depends:       base >= 4.7 && < 5
