@@ -10,11 +10,16 @@ module Math.Properties.Operations (
   -- ** Assosiative law
   -- $asso
   assosiative,
+
   -- ** Distributive law
   -- $distributive
   left_distributive,
   right_distributive,
-  distributive
+  distributive,
+
+  -- ** Commutative law
+  -- $commutative
+  commutative
   )
 where
 
@@ -36,3 +41,9 @@ right_distributive op1 op2 x y z = (x `op2` y) `op1` z == (x `op1` z) `op2` (y `
 
 distributive :: (Eq m) => (m -> m -> m) -> (m -> m -> m) -> m -> m -> m -> Bool
 distributive op1 op2 x y z = left_distributive op1 op2 x y z && right_distributive op1 op2 x y z
+
+-- $commutative
+-- __Definition:__ A binary operation \(\bullet\) is /commutative/ if \(x \bullet y = y \bullet x \).
+
+commutative :: (Eq m) => (m -> m -> m) -> m -> m -> Bool
+commutative op x y = x `op` y == y `op` x
