@@ -1,9 +1,22 @@
+-- # TODO
+-- * Documentation
+
 {-# LANGUAGE
     FlexibleInstances,
     UndecidableInstances
 #-}
 
-module Math.Ring where
+{-|
+Module      : Math.Ring
+Description : Defenition of Ring for Haskell.
+Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+-}
+
+module Math.Ring  (
+  -- * Rings
+  Ring (..),
+  CommutativeRing (..)
+) where
 
 import Math.Monoid
 import Math.Group
