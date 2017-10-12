@@ -38,6 +38,7 @@ test-suite bergen-test
   main-is:             testMain.hs
   other-modules:       Math.MonoidTest
                        Math.GroupTest
+                       Math.RingTest
   build-depends:       base
                      , bergen
                      , tasty
