@@ -36,6 +36,7 @@ test-suite bergen-test
   hs-source-dirs:      test
   main-is:             testMain.hs
   other-modules:       Math.MonoidTest
+                       Math.GroupTest
   build-depends:       base
                      , bergen
                      , tasty
