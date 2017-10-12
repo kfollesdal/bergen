@@ -11,9 +11,9 @@
 module Math.Group where
 
 import Math.Monoid
-import GHC.Integer
-import qualified GHC.Num as N
-import GHC.Int
+import GHC.Integer (Integer, negateInteger)
+import qualified GHC.Num as N (negate)
+import GHC.Int (Int)
 
 class (MultiplicativeMonoid g) => Group g where
   invers :: g -> g
