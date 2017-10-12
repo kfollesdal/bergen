@@ -4,10 +4,10 @@
 
 {-|
 Module      : Math.Monoid
-Description : Monoids with syntax sutable for mathematics.
+Description : Monoids with syntax suitable for mathematics.
 Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
 
-__Note:__ Haskell allready have definition of monoid in "Data.Monoid". But the
+__Note:__ Haskell already have definition of monoid in "Data.Monoid". But the
 syntax is not good for mathematics. In this module we define monoids with syntax
 sutable for mathematics.
 -}
@@ -34,11 +34,11 @@ import qualified GHC.Num as N ((+),(*))
 import GHC.Int (Int)
 import Data.List (foldr)
 
--- | A monoid ('m','*','e')  with '*' as monoid operation. Must satisfye the
--- following proerties:
+-- | A monoid ('m','*','e')  with '*' as monoid operation. Must satisfy the
+-- following properties:
 --
 --  prop> e * x = x = x * e  (unit laws)
---  prop> (x * y) * z = x * (y * z) (assosiativ law)
+--  prop> (x * y) * z = x * (y * z) (associative law)
 class MultiplicativeMonoid m where
   u :: m
   (*) :: m -> m -> m
@@ -72,7 +72,7 @@ instance CommutativMonoid Int
 -- satisfy the following properties:
 --
 -- prop> zero + x = x = x + zero  (unit laws)
--- prop> (x + y) + z = x + (y + z) (assosiativ law)
+-- prop> (x + y) + z = x + (y + z) (associative law)
 -- prop> x + y = y + x (commutative law)
 class AddidtativeMonoid m where
   zero :: m
