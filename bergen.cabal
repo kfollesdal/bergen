@@ -18,6 +18,7 @@ library
   exposed-modules:     Math.Monoid
                        Math.Group
                        Math.Ring
+                       Math.Module
                        Math.Properties.Elements
                        Math.Properties.Operations
   build-depends:       base >= 4.7 && < 5
@@ -39,6 +40,7 @@ test-suite bergen-test
   other-modules:       Math.MonoidTest
                        Math.GroupTest
                        Math.RingTest
+                       Math.ModuleTest
   build-depends:       base
                      , bergen
                      , tasty
