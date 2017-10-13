@@ -1,7 +1,12 @@
 -- TODO
 -- @ Documentation
 -- @ Add tests to ModuleTest.hs
--- Left, Rigth, bimodule?
+-- @ Left, Rigth, bimodule?
+-- @ In HasTensorProduct way do the follwoing code not work?
+--   te_ :: (Basis (Tensor m n) ~ (Basis m, Basis n)) => Basis m -> Basis n -> Tensor m n
+--   te_ x y = basis (x,y)
+--   te :: (Tensor (Basis m) (Basis n) ~ Tensor m n, Basis (Tensor m n) ~ (Basis m, Basis n)) => m -> n -> Tensor m  n
+--   te (decompose -> xs) (decompose -> ys) = msum [(a*b) *> te_ x y| (x,a) <-xs, (y,b) <- ys]
 
 {-# LANGUAGE
   NoImplicitPrelude,
