@@ -19,7 +19,13 @@ module Math.Properties.Operations (
 
   -- ** Commutative law
   -- $commutative
-  commutative
+  commutative,
+
+  -- ** Invers laws
+  -- $invers
+  left_invers,
+  right_invers,
+  invers
   )
 where
 
@@ -47,3 +53,16 @@ distributive op1 op2 x y z = left_distributive op1 op2 x y z && right_distributi
 
 commutative :: (Eq m) => (m -> m -> m) -> m -> m -> Bool
 commutative op x y = x `op` y == y `op` x
+
+-- $invers
+-- __Definition:__ Given a binary operation \(\bullet \) with unit \(e\), a element \(y\) is a /left invers/ to \(x\)
+-- if \(y \bullet x = e\), /rigth invers/ if \(x \bullet y = e \) and called a /invers/ if both left and rigth invers.
+
+invers :: (Eq m) => (m -> m -> m) -> m -> m -> m -> Bool
+invers op u x invx = right_invers op u x invx && left_invers op u invx x
+
+left_invers :: (Eq m) => (m -> m -> m) -> m -> m -> m -> Bool
+left_invers op u invx x = invx `op` x == u
+
+right_invers  :: (Eq m) => (m -> m -> m) -> m -> m -> m -> Bool
+right_invers  op u x invx = x `op` invx == u
