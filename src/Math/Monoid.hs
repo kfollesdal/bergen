@@ -1,5 +1,5 @@
--- # TODO
--- * Add test for mproduxt and msum
+-- TODO
+-- @ Add test for mproduxt and msum
 
 {-# LANGUAGE
   NoImplicitPrelude

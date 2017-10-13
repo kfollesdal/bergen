@@ -1,6 +1,6 @@
--- # TODO
--- * Documentation
--- * Add tests to RingTest.hs
+-- TODO
+-- @ Documentation
+-- @ Add tests to RingTest.hs
 
 {-# LANGUAGE
     FlexibleInstances,

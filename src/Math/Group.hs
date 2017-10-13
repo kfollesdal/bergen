@@ -1,7 +1,7 @@
--- # TODO
--- * Documentation
--- * Add test to GroupTest.hs
--- * Add postfix operrator (^-) :: g -> g for Group?
+-- TODO
+-- @ Documentation
+-- @ Add test to GroupTest.hs
+-- @ Add postfix operrator (^-) :: g -> g for Group?
 
 {-# LANGUAGE
   NoImplicitPrelude,
