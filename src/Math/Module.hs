@@ -32,7 +32,7 @@ class (AbelianGroup m, CommutativeRing (Scalar m)) => Module m where
 
 class (Module m) => HasBasis m where
   type Basis m :: *
-  basisValue :: Basis m -> m
+  basis :: Basis m -> m
   decompose :: m -> [(Basis m, Scalar m)]
   decompose' :: m -> Basis m -> Scalar m
   linearCombi :: [(Basis m, Scalar m)] -> m
