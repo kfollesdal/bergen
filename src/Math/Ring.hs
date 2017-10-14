@@ -3,6 +3,7 @@
 -- @ Add tests to RingTest.hs
 
 {-# LANGUAGE
+    NoImplicitPrelude,
     FlexibleInstances,
     UndecidableInstances
 #-}
@@ -21,6 +22,8 @@ module Math.Ring  (
 
 import Math.Monoid
 import Math.Group
+import GHC.Int (Int)
+import GHC.Integer (Integer)
 
 class (AbelianGroup r, MultiplicativeMonoid r) => Ring r where
 
