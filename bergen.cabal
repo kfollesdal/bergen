@@ -19,6 +19,7 @@ library
                        Math.Group
                        Math.Ring
                        Math.Module
+                       Math.Module.FreeModule
                        Math.Properties.Elements
                        Math.Properties.Operations
   build-depends:       base >= 4.7 && < 5
