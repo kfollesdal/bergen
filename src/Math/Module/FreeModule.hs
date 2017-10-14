@@ -5,11 +5,14 @@
 {-# LANGUAGE
    NoImplicitPrelude,
    TypeFamilies,
-   FlexibleInstances,
-   FlexibleContexts,
-   MultiParamTypeClasses,
-   ViewPatterns
+   MultiParamTypeClasses
 #-}
+
+{-|
+Module      : Math.Module.FreeModule
+Description : Implementation of Free Module in Haskell.
+Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+-}
 
 module Math.Module.FreeModule where
 
@@ -41,13 +44,15 @@ instance (Show k, Eq k, Show b) => Show (FreeModule k b) where
               isAtomic' (c:cs) = isAtomic' cs
               isAtomic' [] = True
 
+instance (CommutativeRing k ,Ord b, Eq k) => AddidtativeMonoid (FreeModule k b) where
+  zero = zerov
+  (+) = add
+
 zerov :: FreeModule k b
 zerov = FM []
 
 add :: (Eq k, Ord b, AddidtativeMonoid k) => FreeModule k b -> FreeModule k b -> FreeModule k b
 add (FM ts) (FM us) = FM $ addmerge ts us where
-
--- addmerge :: (AddidtativeMonoid k, Eq k, Ord b) => [(b,k)] -> [(b,k)] -> [(b,k)]
   addmerge ((a,x):ts) ((b,y):us) =
     case compare a b of
       LT -> (a,x) : addmerge ts ((b,y):us)
@@ -56,24 +61,19 @@ add (FM ts) (FM us) = FM $ addmerge ts us where
   addmerge ts [] = ts
   addmerge [] us = us
 
+instance (Eq k, CommutativeRing k, Ord b) => AbelianGroup (FreeModule k b) where
+  negate = negatev
+
 negatev :: (Eq k, AbelianGroup k) => FreeModule k b -> FreeModule k b
 negatev (FM ts) = FM $ map (\(b,x) -> (b,negate x)) ts
-
-smultL :: (CommutativeRing k, Eq k) => k -> FreeModule k b -> FreeModule k b
-smultL k (FM ts) | k == zero = zerov
-                 | otherwise = FM [(ei,k*xi) | (ei,xi) <- ts]
-
 
 instance (CommutativeRing r, Eq r, Ord b) => Module (FreeModule r b) where
   type Scalar (FreeModule r b) = r
   (*>) = smultL
 
-instance (Eq k, CommutativeRing k, Ord b) => AbelianGroup (FreeModule k b) where
-  negate = negatev
-
-instance (CommutativeRing k ,Ord b, Eq k) => AddidtativeMonoid (FreeModule k b) where
-  zero = zerov
-  (+) = add
+smultL :: (CommutativeRing k, Eq k) => k -> FreeModule k b -> FreeModule k b
+smultL k (FM ts) | k == zero = zerov
+                 | otherwise = FM [(ei,k*xi) | (ei,xi) <- ts]
 
 instance (CommutativeRing k, Ord b, Eq k) => HasBasis (FreeModule k b) where
   type Basis (FreeModule k b) = b
