@@ -1,6 +1,7 @@
 -- TODO
 -- @ Documentation
 -- @ Make tests
+-- @ Take a look at the show function.
 
 {-# LANGUAGE
    NoImplicitPrelude,
