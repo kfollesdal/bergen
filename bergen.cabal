@@ -43,6 +43,7 @@ test-suite bergen-test
                        Math.GroupTest
                        Math.RingTest
                        Math.ModuleTest
+                       Math.AlgebraTest
   build-depends:       base
                      , bergen
                      , tasty
