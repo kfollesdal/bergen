@@ -48,7 +48,7 @@ test-suite bergen-test
                        Math.ModuleTest
                        Math.AlgebraTest
                        Math.CoalgebraTest
-                       Math.Bialgebra
+                       Math.BialgebraTest
                        Math.HopfAlgebraTest
   build-depends:       base
                      , bergen
