@@ -1,3 +1,7 @@
+-- TODO
+-- @ Documentation
+-- @ Make test
+
 {-# LANGUAGE
     MultiParamTypeClasses,
     FlexibleInstances,
@@ -5,12 +9,17 @@
     RecordWildCards
 #-}
 
+{-|
+Module      : Math.HopfAlgebra
+Description : Defenition of Hopf Algebras for Haskell.
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
+-}
+
 module Math.HopfAlgebra where
 
 import Math.Module
-import Math.Module.TensorProduct
 import Math.Algebra
-import Math.CoAlgebra
+import Math.Coalgebra
 import Math.Bialgebra
 
 data HopfAlgebraD m = HopfAlgebraD {
@@ -23,7 +32,7 @@ class HopfAlgebra name m where
   antipode :: name -> m -> m
 
 instance (Module m, HasTensorProduct m m) => HopfAlgebra (HopfAlgebraD m) m where
-  hopfAlgebra = id
+  hopfAlgebra = \x -> x
   antipode (HopfAlgebraD {antipodeD,..}) = antipodeD
 
 instance (Module m, HasTensorProduct m m) => Algebra (HopfAlgebraD m) m where
@@ -31,7 +40,7 @@ instance (Module m, HasTensorProduct m m) => Algebra (HopfAlgebraD m) m where
   unit = unit . bialgebraD
   mult = mult . bialgebraD
 
-instance (Module m, HasTensorProduct m m) => CoAlgebra (HopfAlgebraD m) m where
+instance (Module m, HasTensorProduct m m) => Coalgebra (HopfAlgebraD m) m where
   coalgebra = coalgebra . bialgebraD
   counit = counit . bialgebraD
   comult = comult . bialgebraD
