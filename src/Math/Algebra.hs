@@ -1,3 +1,7 @@
+-- TODO
+-- @ Documentation
+-- @ Make test
+
 {-# LANGUAGE
     NoImplicitPrelude,
     MultiParamTypeClasses,
@@ -5,6 +9,12 @@
     NamedFieldPuns,
     RecordWildCards
 #-}
+
+{-|
+Module      : Math.Algebra
+Description : Defenition of Algebras for Haskell.
+Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+-}
 
 module Math.Algebra where
 
