@@ -22,6 +22,7 @@ library
                        Math.Module.FreeModule
                        Math.Algebra
                        Math.Coalgebra
+                       Math.Bialgebra
                        Math.Properties.Elements
                        Math.Properties.Operations
   build-depends:       base >= 4.7 && < 5
@@ -46,6 +47,7 @@ test-suite bergen-test
                        Math.ModuleTest
                        Math.AlgebraTest
                        Math.CoalgebraTest
+                       Math.Bialgebra
   build-depends:       base
                      , bergen
                      , tasty
