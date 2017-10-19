@@ -1,4 +1,5 @@
 {-# LANGUAGE
+    NoImplicitPrelude,
     MultiParamTypeClasses,
     FlexibleInstances,
     NamedFieldPuns,
@@ -8,7 +9,6 @@
 module Math.Algebra where
 
 import Math.Module
-import Math.Module.TensorProduct
 
 data AlgebraD m = AlgebraD {
   unitD :: Scalar m -> m,
@@ -21,6 +21,6 @@ class (Module m, HasTensorProduct m m) => Algebra name m where
   mult :: name -> Tensor m m -> m
 
 instance (Module m, HasTensorProduct m m) => Algebra (AlgebraD m) m where
-  algebra = id
+  algebra = \x -> x
   unit (AlgebraD {unitD,..}) = unitD
   mult (AlgebraD {unitD,..}) = multD
