@@ -1,1 +1,1 @@
-module Math.CoAlgebraTest where
+module Math.AlgebraTest where
