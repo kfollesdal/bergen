@@ -13,7 +13,7 @@
 {-|
 Module      : Math.Coalgebra
 Description : Defenition of Coalgebras for Haskell.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
 module Math.Coalgebra where

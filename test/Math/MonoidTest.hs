@@ -8,7 +8,7 @@
 {-
 Module      : Math.MonoidTest
 Description : Test for monoid implementations.
-Maintainer  : kfo021@uib.no
+Maintainer  : kfollesdal@gmail.com
 
 Test for monoid implementations.
 -}

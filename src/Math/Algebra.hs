@@ -13,7 +13,7 @@
 {-|
 Module      : Math.Algebra
 Description : Defenition of Algebras for Haskell.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
 module Math.Algebra where

@@ -12,7 +12,7 @@
 {-|
 Module      : Math.Group
 Description : Defenition of mathemaical groups.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
 module Math.Group  (

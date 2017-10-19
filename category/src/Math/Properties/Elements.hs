@@ -1,7 +1,7 @@
 {-|
 Module      : Math.Properties.Elements
 Description : Properties for elements in algebraic structures.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 
 Properties for elements in algebraic structures.
 -}

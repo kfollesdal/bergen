@@ -9,7 +9,7 @@
 {-|
 Module      : Algebra.Monoid.Test
 Description : Short description
-Maintainer  : kfo021@uib.no
+Maintainer  : kfollesdal@gmail.com
 
 Here is a longer description of this module, containing some
 commentary with @some markup@.

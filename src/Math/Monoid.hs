@@ -8,7 +8,7 @@
 {-|
 Module      : Math.Monoid
 Description : Monoids with syntax suitable for mathematics.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 
 __Note:__ Haskell already have definition of monoid in "Data.Monoid". But the
 syntax is not good for mathematics. In this module we define monoids with syntax

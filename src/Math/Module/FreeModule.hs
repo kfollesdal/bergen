@@ -12,7 +12,7 @@
 {-|
 Module      : Math.Module.FreeModule
 Description : Implementation of Free Module in Haskell.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
 module Math.Module.FreeModule where

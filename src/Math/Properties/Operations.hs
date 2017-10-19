@@ -1,7 +1,7 @@
 {-|
 Module      : Math.Properties.Operations
 Description : Properties for operations on algebraic structures.
-Maintainer  : Kristoffer K. Føllesdal <kfo021@uib.no>
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 
 Properties for operations on algebraic structures.
 -}
