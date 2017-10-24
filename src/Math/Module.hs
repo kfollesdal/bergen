@@ -1,6 +1,7 @@
 -- TODO
 -- @ Documentation
 -- @ Add tests to ModuleTest.hs
+-- @ Use ⨂ as symbol for Tensor product
 -- @ Left, Rigth, bimodule?
 -- @ In HasTensorProduct way do the follwoing code not work?
 --   te_ :: (Basis (Tensor m n) ~ (Basis m, Basis n)) => Basis m -> Basis n -> Tensor m n
