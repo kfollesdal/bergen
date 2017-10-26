@@ -3,6 +3,8 @@
 -- @ Add tests to ModuleTest.hs
 -- @ Use ⨂ as symbol for Tensor product
 -- @ Left, Rigth, bimodule?
+-- @ Monad and bilinear
+-- @ Add a overloaded lift function of function on basis (Basis -> Module -> Module, Module -> Bais -> Module ..)
 -- @ In HasTensorProduct way do the follwoing code not work?
 --   te_ :: (Basis (Tensor m n) ~ (Basis m, Basis n)) => Basis m -> Basis n -> Tensor m n
 --   te_ x y = basis (x,y)
