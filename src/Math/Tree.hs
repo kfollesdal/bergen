@@ -4,7 +4,8 @@
   TypeFamilies,
   ViewPatterns,
   FlexibleInstances,
-  MultiParamTypeClasses
+  MultiParamTypeClasses,
+  FlexibleContexts
 #-}
 
 -- FreeModule Monad
@@ -17,10 +18,11 @@ import Text.Show (Show(..))
 import Math.Module
 import Math.Module.FreeModule
 import Data.Monoid
+import Data.Text
 
 data MK c = I | MK {root:: c, left:: MK c, rigth :: MK c} deriving (Eq, Ord, Show)
 
-instance Forrest MK where
+instance Forrest MK c  where
   type Tree MK c = MK c
   isTree I = False
   isTree (MK c I x) = True
@@ -29,7 +31,7 @@ instance Forrest MK where
   isEmpty x = False
   bPlus c x = MK c I x
   bMinus (MK c I f) = f
-  bMinus x = error $ show x ++ "Is not a Tree"
+  bMinus x = error "Is not a Tree"
   mk_ c l r = MK c l r
   mkSplit (MK c l r) = (c,l,r)
   mkSplit I = (undefined,I,I)
@@ -41,18 +43,21 @@ instance Forrest MK where
   --unconcat I = (I,I)
   --unconcat (MK c l r) =
 
+class TreeC a where
+
+instance TreeC (MK c)
 
 -- evenetuekt (Monoid (f c)) => Forrest f c
-class Forrest f where -- Monad
+class (TreeC(Tree f c)) => Forrest f c where -- Monad
     type Tree f c ∷ *
     isTree ∷ f c -> Bool
     isEmpty ∷ f c -> Bool
-    bPlus ∷ c -> f c → Tree f c
-    bMinus ∷ (Show c) ⇒ Tree f c -> f c
+    bPlus ∷ c -> f c -> Tree f c
+    bMinus ∷ Tree f c -> f c
     mk_ ∷ c -> f c -> f c -> f c
-    --mk_ c v u = concat v (bPlus c u)
+    --mk_ c l r = concat l (bPlus c r)
     --mk ∷ c -> FreeModule k (f c) → FreeModule k (f c) → FreeModule k (f c)
-
+    -- mk = bilinear mk_
     mkSplit ∷ f c -> (c, f c,f c)
     mkSplit x = (mkRoot x, mkLeft x, mkRigth x)
     mkRoot :: f c -> c
@@ -66,26 +71,10 @@ class Forrest f where -- Monad
     lift :: Tree f c -> f c
     --unconcat ∷ f c -> (Tree f c, f c)
 
-class LeftConcat a b f where -- Can we use Module?
-  lconcat :: a -> b -> f
 
-instance (Forrest f) => LeftConcat (f c) (f c) (f c) where
-  lconcat u v = concat u v
-
-instance (Forrest f, u ~ Tree f c, v ~ Tree f c) => LeftConcat u v (f c) where
-  lconcat t f = concat (lift t) (lift f)
-
-instance (Forrest f, u ~ Tree f c) => LeftConcat u (f c) (f c) where
-  lconcat t f = concat (lift t) f
-
-instance (Forrest f, u ~ Tree f c) => LeftConcat (f c) u (f c) where
-  lconcat f t = concat f (lift t)
-
-
-instance (Forrest f) => Monoid (f c) where
-  mempty = empty
-  mappend = concat
-
+-- instance (Forrest f) => Monoid (f c) where
+--   mempty = empty
+--   mappend = concat
 
 -- class GraftingProduct f where
 --   graft_, (⊵) :: f → f → FreeModule k f
@@ -100,3 +89,34 @@ instance (Forrest f) => Monoid (f c) where
 --   graft_ t@(isTree -> True) (mkSplit -> (c, l, r)) =
 --     mk c (t ⊵ l) (lift r) + mk c (lift l) (lift (u⋅r) + t ⊵ r)
 --   graft_ (unconcat -> (t,f)) w = (lift t) ▷ (f ⊵ w) - (t ⊵ f) ▷ (lift w)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--
+-- class LeftConcat a b f where -- Can we use Module?
+--   lconcat :: a -> b -> f
+--
+-- instance (Forrest f) => LeftConcat (f c) (f c) (f c) where
+--   lconcat u v = concat u v
+--
+-- instance (Forrest f, u ~ Tree f c, v ~ Tree f c) => LeftConcat u v (f c) where
+--   lconcat t f = concat (lift t) (lift f)
+--
+-- instance (Forrest f, u ~ Tree f c) => LeftConcat u (f c) (f c) where
+--   lconcat t f = concat (lift t) f
+--
+-- instance (Forrest f, u ~ Tree f c) => LeftConcat (f c) u (f c) where
+--   lconcat f t = concat f (lift t)
