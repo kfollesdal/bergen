@@ -74,3 +74,12 @@ class (Module m, Module n,
   tf :: (Scalar (Tensor m n) ~ Scalar (Tensor m' n'), HasTensorProduct m' n')
       => (m -> m') -> (n -> n') -> Tensor m n -> Tensor m' n'
   tf f g (decompose -> xs) = msum [k *> te (f (basis x)) (g (basis y)) | ((x,y),k) <- xs]
+
+-- -- HasBasis => FreeModule
+-- class (Functor f, Monad f) => FreeModule f where
+--   unique :: (Module m) => (a -> f a) -> m -> (a -> m) -> f a -> m
+--
+-- instance (FreeModule f) => HasBasis (f b) where
+--   type Basis (f b) = b
+--
+-- instance (FreeModule f) => Module (f b) where
