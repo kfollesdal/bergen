@@ -66,8 +66,14 @@ class (Collection f, Tree(Element f), Monoid f) => Forrest f where
   --unconcat :: f -> (Tree f, f)
 
 
-
 data MK c = I | MK {root:: c, left:: MK c, rigth :: MK c} deriving (Eq, Ord, Show)
+
+instance (Eq c) => HasEmpty (MK c) where
+  empty = I
+
+-- instance (Eq c) => Collection (MK c) where
+--   type Element (MK c) = MK c
+
 
 -- instance Forrest MK c  where
 --   type Tree MK c = MK c
