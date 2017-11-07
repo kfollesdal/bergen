@@ -1,6 +1,8 @@
 -- TODO
 -- @ Add test for mproduxt and msum
 -- @ Change u to one?
+-- @ Replace * with ⋅
+-- @ Multiplicative, Additative and Commutative monoid for functions a -> a
 
 {-# LANGUAGE
   NoImplicitPrelude
