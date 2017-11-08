@@ -63,6 +63,7 @@ bilinear f
   (decompose -> xs)
   (decompose -> ys)
   = msum [ (c*d) *> f x y | (x,c) <- xs, (y,d) <- ys]
+--  = linear (x -> linear (f x) ys ) xs
 
 class (Module m, Module n,
       Scalar m ~ Scalar n, Scalar m ~ Scalar (Tensor m n),
