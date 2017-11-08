@@ -72,9 +72,10 @@ class (Module m, Module n,
       => HasTensorProduct m n where
   type Tensor m n :: *
   te :: m -> n -> Tensor m n
-  te (decompose -> xs)
-     (decompose -> ys)
-     = msum [(a*b) *> basis (x,y) | (x,a) <-xs, (y,b) <- ys]
+  te = bilinear (\x y -> basis (x,y))
+  -- te (decompose -> xs)
+  --    (decompose -> ys)
+  --    = msum [(a*b) *> basis (x,y) | (x,a) <-xs, (y,b) <- ys]
   tf :: (Scalar (Tensor m n) ~ Scalar (Tensor m' n'), HasTensorProduct m' n')
       => (m -> m') -> (n -> n') -> Tensor m n -> Tensor m' n'
   tf f g (decompose -> xs)
