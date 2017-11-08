@@ -50,7 +50,7 @@ class (Module m) => HasBasis m where
   decompose :: m -> [(Basis m, Scalar m)]
   decompose' :: m -> Basis m -> Scalar m
   linearCombi :: [(Basis m, Scalar m)] -> m
-  linearCombi  xs = msum [ c *> (basis b) | (b,c) <- xs]
+  linearCombi  xs = msum [ c *> basis b | (b,c) <- xs]
 
 linear :: (HasBasis n, Module m, Scalar n ~ Scalar m) => (Basis n -> m) -> (n -> m)
 linear f (decompose -> xs) = msum [ c *> f b | (b,c) <-xs]
