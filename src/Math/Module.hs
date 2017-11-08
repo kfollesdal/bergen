@@ -85,3 +85,13 @@ class (Module m, Module n,
 --   type Basis (f b) = b
 --
 -- instance (FreeModule f) => Module (f b) where
+-- 
+-- data FreeM k :: * -> * where
+--   Test :: a -> FreeM k a
+--
+-- instance Functor (FreeM k) where
+--   fmap :: (k ~ Scalar (FreeM k a), k ~ Scalar (FreeM k b), Scalar (FreeM k a) ~ Scalar (FreeM k b),
+--           HasBasis (FreeM k b), Module (FreeM k a),
+--           HasBasis (FreeM k a), Module (FreeM k b), Basis (FreeM k a) ~ a,
+--           Basis (FreeM k b) ~ b) => (a -> b) -> FreeM k a -> FreeM k b
+--   fmap m (decompose -> xs) = msum [ c *> basis (m x) | (x,c) <- xs]
