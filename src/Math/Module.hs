@@ -59,11 +59,10 @@ bilinear :: (Module m, Module n, Module l,
             Scalar m ~ Scalar n, Scalar n ~ Scalar l,
             HasBasis n, HasBasis m)
             => (Basis m -> Basis n -> l) -> (m -> n -> l)
-bilinear f
-  (decompose -> xs)
-  (decompose -> ys)
-  = msum [ (c*d) *> f x y | (x,c) <- xs, (y,d) <- ys]
---  = linear (x -> linear (f x) ys ) xs
+bilinear f xs ys = linear (\x -> linear (f x) ys ) xs
+  --(decompose -> xs)
+  -- (decompose -> ys)
+  -- = msum [ (c*d) *> f x y | (x,c) <- xs, (y,d) <- ys]*/
 
 class (Module m, Module n,
       Scalar m ~ Scalar n, Scalar m ~ Scalar (Tensor m n),
