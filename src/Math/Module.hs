@@ -28,6 +28,8 @@ Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 module Math.Module (
   -- * Module
   Module (..),
+  linear,
+  bilinear,
 
   -- * Basis
   HasBasis (..),
