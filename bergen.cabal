@@ -27,6 +27,9 @@ library
                        --Math.Combinatorics.Tree
                        Math.Algebra.Properties.Elements
                        Math.Algebra.Properties.Operations
+                       Math.TEMP.Collection
+                       Math.TEMP.HasEmpty
+                       Math.TEMP.Enumerable
   build-depends:       base >= 4.7 && < 5
                        , integer-gmp
   default-language:    Haskell2010
