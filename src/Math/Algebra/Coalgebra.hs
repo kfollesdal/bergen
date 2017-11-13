@@ -16,9 +16,9 @@ Description : Defenition of Coalgebras for Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Coalgebra where
+module Math.Algebra.Coalgebra where
 
-import Math.Module
+import Math.Algebra.Module
 
 data CoalgebraD m = CoalgebraD {
   counitD :: m -> Scalar m,

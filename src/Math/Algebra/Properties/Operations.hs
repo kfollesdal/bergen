@@ -6,7 +6,7 @@ Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 Properties for operations on algebraic structures.
 -}
 
-module Math.Properties.Operations (
+module Math.Algebra.Properties.Operations (
   -- ** Assosiative law
   -- $asso
   assosiative,

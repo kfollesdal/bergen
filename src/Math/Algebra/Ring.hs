@@ -14,14 +14,14 @@ Description : Defenition of Ring for Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Ring  (
+module Math.Algebra.Ring  (
   -- * Rings
   Ring (..),
   CommutativeRing (..)
 ) where
 
-import Math.Monoid
-import Math.Group
+import Math.Algebra.Monoid
+import Math.Algebra.Group
 import GHC.Int (Int)
 import GHC.Integer (Integer)
 

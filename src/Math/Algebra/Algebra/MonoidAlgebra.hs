@@ -4,7 +4,7 @@
   NoImplicitPrelude
 #-}
 
-module Math.Alegebra.MonoidAlgebra where
+module Math.Algebra.Algebra.MonoidAlgebra where
 
 import Math.Algebra
 import Math.Monoid

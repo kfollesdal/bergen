@@ -17,15 +17,15 @@ module Math.MonoidTest where
 
 import Prelude hiding ((*))
 
-import Math.Monoid
+import Math.Algebra.Monoid
 
 import Test.Tasty
 import Test.Tasty.SmallCheck as SC
 import Test.Tasty.QuickCheck as QC
 import Test.SmallCheck.Series (Serial)
 
-import Math.Properties.Elements (unit)
-import Math.Properties.Operations (assosiative, commutative)
+import Math.Algebra.Properties.Elements (unit)
+import Math.Algebra.Properties.Operations (assosiative, commutative)
 
 data Type a = Test
 

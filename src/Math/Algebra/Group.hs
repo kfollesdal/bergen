@@ -15,14 +15,14 @@ Description : Defenition of mathemaical groups.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Group  (
+module Math.Algebra.Group  (
  -- * Groups
  Group (..),
  CommutativGroup (..),
  AbelianGroup (..)
 ) where
 
-import Math.Monoid
+import Math.Algebra.Monoid
 import GHC.Integer (Integer, negateInteger)
 import qualified GHC.Num as N (negate)
 import GHC.Int (Int)

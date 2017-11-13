@@ -1,3 +1,3 @@
 module Math.GroupTest where
 
-import Math.Group
+import Math.Algebra.Group

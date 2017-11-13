@@ -15,12 +15,12 @@ Description : Defenition of Hopf Algebras for Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.HopfAlgebra where
+module Math.Algebra.HopfAlgebra where
 
-import Math.Module
-import Math.Algebra
-import Math.Coalgebra
-import Math.Bialgebra
+import Math.Algebra.Module
+import Math.Algebra.Algebra
+import Math.Algebra.Coalgebra
+import Math.Algebra.Bialgebra
 
 data HopfAlgebraD m = HopfAlgebraD {
   bialgebraD :: BialgebraD m,

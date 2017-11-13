@@ -25,7 +25,7 @@ Description : Defenition of mathemaical Module for Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Module (
+module Math.Algebra.Module (
   -- * Module
   Module (..),
   linear,
@@ -38,9 +38,9 @@ module Math.Module (
   HasTensorProduct (..)
 ) where
 
-import Math.Ring (CommutativeRing)
-import Math.Group (AbelianGroup)
-import Math.Monoid ((*), msum)
+import Math.Algebra.Ring (CommutativeRing)
+import Math.Algebra.Group (AbelianGroup)
+import Math.Algebra.Monoid ((*), msum)
 
 class (AbelianGroup m, CommutativeRing (Scalar m)) => Module m where
   type Scalar m :: *

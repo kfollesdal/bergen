@@ -16,9 +16,9 @@ Description : Defenition of Algebras for Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Algebra where
+module Math.Algebra.Algebra where
 
-import Math.Module
+import Math.Algebra.Module
 
 data AlgebraD m = AlgebraD {
   unitD :: Scalar m -> m,

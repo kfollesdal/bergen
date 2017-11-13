@@ -16,11 +16,11 @@ Description : Defenition of Bialgebras for Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Bialgebra where
+module Math.Algebra.Bialgebra where
 
-import Math.Module
-import Math.Algebra
-import Math.Coalgebra
+import Math.Algebra.Module
+import Math.Algebra.Algebra
+import Math.Algebra.Coalgebra
 import GHC.Base ((.))
 
 data BialgebraD m = BialgebraD {

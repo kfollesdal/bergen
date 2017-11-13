@@ -7,13 +7,13 @@ Properties for elements in algebraic structures.
 -}
 
 
-module Math.Properties.Elements (
+module Math.Algebra.Properties.Elements (
   -- ** Unit laws
   -- | __Definition:__ Given a binary operation \(\bullet : A \times A \to A\),
-  -- a element \(u \in A\) is a /left unit/ for the operation if 
+  -- a element \(u \in A\) is a /left unit/ for the operation if
   -- \(u \bullet x = x \), /rigth unit/ if \(x \bullet u = x\) and a u is  a
-  -- /unit/ for \(\bullet\) if it is both a left and rigth unit. 
-  
+  -- /unit/ for \(\bullet\) if it is both a left and rigth unit.
+
   left_unit,
   right_unit,
   unit

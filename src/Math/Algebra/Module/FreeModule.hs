@@ -15,12 +15,12 @@ Description : Implementation of Free Module in Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Module.FreeModule where
+module Math.Algebra.Module.FreeModule where
 
-import Math.Monoid
-import Math.Group
-import Math.Module
-import Math.Ring
+import Math.Algebra.Monoid
+import Math.Algebra.Group
+import Math.Algebra.Module
+import Math.Algebra.Ring
 import Text.Show (Show (..))
 import GHC.Base (Eq (..), Ord (..), Ordering (..), Maybe (..), ($), (++), Bool (..), map, otherwise)
 import Data.List (head, lookup)

@@ -18,7 +18,7 @@ syntax is not good for mathematics. In this module we define monoids with syntax
 sutable for mathematics.
 -}
 
-module Math.Monoid (
+module Math.Algebra.Monoid (
   -- * Monoids
   -- | __Definition:__ A /monoid/ \((M,\bullet,u)\) is a set \(M\) togheter with
   -- an 'Math.Properties.Operations.assosiative' binary operation \(\bullet\)
