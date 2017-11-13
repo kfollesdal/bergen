@@ -24,7 +24,7 @@ library
                        Math.Algebra.Coalgebra
                        Math.Algebra.Bialgebra
                        Math.Algebra.HopfAlgebra
-                       --Math.Combinatorics.Tree
+                       Math.Combinatorics.Tree
                        Math.Algebra.Properties.Elements
                        Math.Algebra.Properties.Operations
                        Math.TEMP.Collection
