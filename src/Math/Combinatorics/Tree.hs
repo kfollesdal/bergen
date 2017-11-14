@@ -22,14 +22,17 @@ import Data.Monoid
 import Math.TEMP.HasEmpty
 import Math.TEMP.Collection
 import Math.Algebra.Monoid
+import Math.TEMP.FreeMonoid
 
 class Tree t where
   type Node t
 
-class (Collection f, Tree(Element f), MultiplicativeMonoid f) => Forrest f where
+class (Collection f, Tree (Element f)) => Forrest f where
   isTree :: f -> Bool
   bplus :: Node (Element f) -> f -> Element f
   bminus :: Element f -> f
+
+class (Forrest f, FreeMonoid f) => OrderedForrest f where
   mk_ :: Node(Element f) -> f -> f -> f
   mk_ c x y = x * (singelton (bplus c y))
   mkSplit :: f -> (Node(Element f),f,f)
@@ -40,7 +43,9 @@ class (Collection f, Tree(Element f), MultiplicativeMonoid f) => Forrest f where
   mkLeft (mkSplit -> (_,l,_)) = l
   mkRigth :: f -> f
   mkRigth (mkSplit -> (_,_,r)) = r
-  --unconcat :: f -> (Tree f, f)
+
+--class (Collection f, Tree(Element f), FreeMonoid f) => Forrest f where
+
 
   -- mkT :: Node (Element f) -> FreeModule k f ⨂ FreeModule k f -> FreeModule k f
   -- mkT c = linear (\(x,y) -> basis (mk_ c x y))
@@ -63,4 +68,4 @@ data MK c = I | MK {root:: c, left:: MK c, rigth :: MK c} deriving (Eq, Ord, Sho
 --   graft_ w (isEmpty -> True) = zero
 --   graft_ t@(isTree -> True) (mkSplit -> (c, l, r)) =
 --     mk c (t ⊵ l) (lift r) + mk c (lift l) (lift (u⋅r) + t ⊵ r)
---   graft_ (unconcat -> (t,f)) w = (lift t) ▷ (f ⊵ w) - (t ⊵ f) ▷ (lift w)
+--   graft_ (headTail -> (t,f)) w = (lift t) ▷ (f ⊵ w) - (t ⊵ f) ▷ (lift w)
