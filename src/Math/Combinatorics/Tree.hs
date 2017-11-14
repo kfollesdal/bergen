@@ -23,6 +23,7 @@ import Math.TEMP.HasEmpty
 import Math.TEMP.Collection
 import Math.Algebra.Monoid
 import Math.TEMP.FreeMonoid
+import Math.Algebra.Ring
 
 class Tree t where
   type Node t
@@ -51,8 +52,8 @@ class (Forrest f, FreeMonoid f) => OrderedForrest f where
   -- mkT c = linear (\(x,y) -> basis (mk_ c x y))
 
 
--- mk :: (Forrest f) => Node(Element f) -> FreeModule k f -> FreeModule k f -> FreeModule k f
--- mk c = bilinear (mk_ c)
+mk :: (OrderedForrest f, CommutativeRing k, Eq k, Ord f) => Node(Element f) -> FreeModule k f -> FreeModule k f -> FreeModule k f
+mk c = bilinear (\x y -> basis (mk_ c x y))
 
 data MK c = I | MK {root:: c, left:: MK c, rigth :: MK c} deriving (Eq, Ord, Show)
 
