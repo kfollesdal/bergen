@@ -48,8 +48,8 @@ class (Forrest f, FreeMonoid f) => OrderedForrest f where
 --class (Collection f, Tree(Element f), FreeMonoid f) => Forrest f where
 
 
-  -- mkT :: Node (Element f) -> FreeModule k f ⨂ FreeModule k f -> FreeModule k f
-  -- mkT c = linear (\(x,y) -> basis (mk_ c x y))
+mkT :: (OrderedForrest f, CommutativeRing k, Eq k, Ord f) => Node (Element f) -> Tensor (FreeModule k f) (FreeModule k f) -> FreeModule k f
+mkT c = linear (\(x,y) -> basis (mk_ c x y))
 
 
 mk :: (OrderedForrest f, CommutativeRing k, Eq k, Ord f) => Node(Element f) -> FreeModule k f -> FreeModule k f -> FreeModule k f
