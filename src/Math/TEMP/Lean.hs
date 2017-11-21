@@ -5,11 +5,11 @@
 #-}
 
 import Test.LeanCheck
-import Test.LeanCheck.Function.ListsOfPairs
+--import Test.LeanCheck.Function.ListsOfPairs
 import Math.Algebra.Properties.Elements
 import GHC.Base (Int (..), Bool (..), IO (..), Eq (..), ($))
-import Prelude (uncurry)
-import Control.Monad (mapM_)
+import Prelude (uncurry, putStrLn, putStr)
+import Control.Monad (mapM_, (>>))
 import GHC.Show (Show (..))
 import Math.Algebra.Monoid
 import Math.Algebra.Properties.Operations
@@ -27,10 +27,16 @@ instance Listable a => Listable (Mk a) where
 
 data Type' a = Test'
 
--- test :: forall a . (Listable a, AddidtativeMonoid a, Show a, Eq a) => Type' a -> IO()
--- test _ = mapM_ check [unit @a (+) zero, assosiative @(a->a) (+)]
+test_AddtativeMonoid :: forall a . (Listable a, AddidtativeMonoid a, Show a, Eq a) => Type' a -> IO()
+test_AddtativeMonoid _ =
+  putStrLn "AddtativeMonoid" >>
+  check (unit (+) zero :: a -> Bool) >>
+  check (assosiative (+) :: a -> a -> a -> Bool) >>
+  check (commutative (+) :: a -> a -> Bool)
 
 testf :: forall a . (Listable a, AddidtativeMonoid a, Show a, Eq a) => Type' a -> IO()
-testf _ = check (assosiative @a (+))
+testf _ = check (assosiative (+) :: a -> a -> a -> Bool)
 
-testInt = testf (Test' :: Type' Int)
+-- test = check (assosiative (+) :: Int -> Int -> Int -> Bool)
+
+res = results (assosiative (+) :: Int -> Int -> Int -> Bool)
