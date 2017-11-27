@@ -25,8 +25,20 @@ import Math.Algebra.Monoid
 import Math.TEMP.FreeMonoid
 import Math.Algebra.Ring
 
-class Tree t where
+class (Collection (Forrest t), t ~ Element f) => Tree t where
   type Node t
+  type Forrest t
+  root :: t -> Node t
+  children :: t -> Forrest t
+  node :: Node t -> Forrest t -> t
+  -- value(node(e, f)) = e
+  -- children(node(e, f)) = f
+
+bminus :: (Tree t) => t -> Forrest t
+bminus = children
+
+bplus :: (Tree t) => Node t -> Forrest t -> t
+bplus = node
 
 class (Collection f, Tree (Element f)) => Forrest f where
   isTree :: f -> Bool
