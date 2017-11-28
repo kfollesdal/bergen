@@ -1,5 +1,5 @@
 -- TODO
--- @ Add test for mproduxt and msum
+-- @ Add test for mproduxt and sum
 -- @ Change u to one?
 -- @ Replace * with ⋅
 -- @ Multiplicative, Additative and Commutative monoid for functions a -> a
@@ -32,7 +32,7 @@ module Math.Algebra.Monoid (
   -- opertion also is 'commutative'.
   CommutativMonoid (..),
   AddidtativeMonoid (..),
-  msum
+  sum
   ) where
 
 import GHC.Integer (Integer, timesInteger, plusInteger)
@@ -86,10 +86,10 @@ class AddidtativeMonoid m where
 
 -- | Sum of a list of elements in a 'AddidtativeMonoid'.
 --
--- >>> msum [2,4,6]
+-- >>> sum [2,4,6]
 -- 20
-msum :: (AddidtativeMonoid c) => [c] -> c
-msum = foldr (+) zero
+sum :: (AddidtativeMonoid c) => [c] -> c
+sum = foldr (+) zero
 
 instance AddidtativeMonoid Integer where
   zero = 0

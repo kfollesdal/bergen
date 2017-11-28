@@ -9,7 +9,7 @@
 --   te_ :: (Basis (Tensor m n) ~ (Basis m, Basis n)) => Basis m -> Basis n -> Tensor m n
 --   te_ x y = basis (x,y)
 --   te :: (Tensor (Basis m) (Basis n) ~ Tensor m n, Basis (Tensor m n) ~ (Basis m, Basis n)) => m -> n -> Tensor m  n
---   te (decompose -> xs) (decompose -> ys) = msum [(a*b) *> te_ x y| (x,a) <-xs, (y,b) <- ys]
+--   te (decompose -> xs) (decompose -> ys) = sum [(a*b) *> te_ x y| (x,a) <-xs, (y,b) <- ys]
 
 {-# LANGUAGE
   NoImplicitPrelude,
@@ -40,7 +40,7 @@ module Math.Algebra.Module (
 
 import Math.Algebra.Ring (CommutativeRing)
 import Math.Algebra.Group (AbelianGroup)
-import Math.Algebra.Monoid ((*), msum)
+import Math.Algebra.Monoid ((*), sum)
 
 class (AbelianGroup m, CommutativeRing (Scalar m)) => Module m where
   type Scalar m :: *
@@ -52,10 +52,10 @@ class (Module m) => HasBasis m where
   decompose :: m -> [(Basis m, Scalar m)]
   decompose' :: m -> Basis m -> Scalar m
   linearCombi :: [(Basis m, Scalar m)] -> m
-  linearCombi  xs = msum [ c *> basis b | (b,c) <- xs]
+  linearCombi  xs = sum [ c *> basis b | (b,c) <- xs]
 
 linear :: (HasBasis n, Module m, Scalar n ~ Scalar m) => (Basis n -> m) -> (n -> m)
-linear f (decompose -> xs) = msum [ c *> f b | (b,c) <-xs]
+linear f (decompose -> xs) = sum [ c *> f b | (b,c) <-xs]
 
 bilinear :: (Module m, Module n, Module l,
             Scalar m ~ Scalar n, Scalar n ~ Scalar l,
@@ -64,7 +64,7 @@ bilinear :: (Module m, Module n, Module l,
 bilinear f xs ys = linear (\x -> linear (f x) ys ) xs
   --(decompose -> xs)
   -- (decompose -> ys)
-  -- = msum [ (c*d) *> f x y | (x,c) <- xs, (y,d) <- ys]*/
+  -- = sum [ (c*d) *> f x y | (x,c) <- xs, (y,d) <- ys]*/
 
 class (Module m, Module n,
       Scalar m ~ Scalar n, Scalar m ~ Scalar (Tensor m n),
@@ -76,12 +76,12 @@ class (Module m, Module n,
   te = bilinear (\x y -> basis (x,y))
   -- te (decompose -> xs)
   --    (decompose -> ys)
-  --    = msum [(a*b) *> basis (x,y) | (x,a) <-xs, (y,b) <- ys]
+  --    = sum [(a*b) *> basis (x,y) | (x,a) <-xs, (y,b) <- ys]
   tf :: (Scalar (Tensor m n) ~ Scalar (Tensor m' n'), HasTensorProduct m' n')
       => (m -> m') -> (n -> n') -> Tensor m n -> Tensor m' n'
   tf f g = linear (\(x,y) -> te (f (basis x)) (g (basis y)))
   -- tf f g (decompose -> xs)
-  --    = msum [k *> te (f (basis x)) (g (basis y)) | ((x,y),k) <- xs]
+  --    = sum [k *> te (f (basis x)) (g (basis y)) | ((x,y),k) <- xs]
 
 -- -- HasBasis => FreeModule
 -- class (Functor f, Monad f) => FreeModule f where
@@ -100,4 +100,4 @@ class (Module m, Module n,
 --           HasBasis (FreeM k b), Module (FreeM k a),
 --           HasBasis (FreeM k a), Module (FreeM k b), Basis (FreeM k a) ~ a,
 --           Basis (FreeM k b) ~ b) => (a -> b) -> FreeM k a -> FreeM k b
---   fmap m (decompose -> xs) = msum [ c *> basis (m x) | (x,c) <- xs]
+--   fmap m (decompose -> xs) = sum [ c *> basis (m x) | (x,c) <- xs]
