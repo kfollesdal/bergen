@@ -25,7 +25,7 @@ module Math.Algebra.Monoid (
   -- and an element \(u\) which is a 'Math.Properties.Elements.unit'
   -- for \(\bullet\).
   MultiplicativeMonoid (..),
-  mproduct,
+  product,
 
   -- ** Commutative monoids
   -- __Definition:__  A /commutative monoid/ is a monoid where the binary
@@ -51,10 +51,10 @@ class MultiplicativeMonoid m where
 
 -- | Product of a list of elements in a 'MultiplicativeMonoid'.
 --
--- >>> mproduct [2,4,6,8]
+-- >>> product [2,4,6,8]
 -- 384
-mproduct :: (MultiplicativeMonoid m) => [m] -> m
-mproduct = foldr (*) u
+product :: (MultiplicativeMonoid m) => [m] -> m
+product = foldr (*) u
 
 instance MultiplicativeMonoid Integer where
   u = 1
