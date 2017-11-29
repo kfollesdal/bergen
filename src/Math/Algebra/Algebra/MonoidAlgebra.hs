@@ -13,6 +13,10 @@ import Math.Module
 import Math.Module.FreeModule
 import GHC.Base (Eq (..), Ord (..))
 
+
+-- free algebra on module (Monoid algebra)
+-- tensorAlgebra
+
 monoidAlgebra :: (MultiplicativeMonoid b, CommutativeRing k, Eq k, Ord b) => AlgebraD (FreeModule k b)
 monoidAlgebra = AlgebraD {
   unitD = \x -> x *> basis u,
