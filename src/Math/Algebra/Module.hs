@@ -83,6 +83,10 @@ class (Module m, Module n,
   -- tf f g (decompose -> xs)
   --    = sum [k *> te (f (basis x)) (g (basis y)) | ((x,y),k) <- xs]
 
+-- tfc :: (Tensor a b -> c) -> (Tensor a' b' -> c') -> Tensor (Tensor a a') (Tensor b b') -> Tensor c c'
+-- tfc f g = linear (\((x,x'),(y,y')) -> te (f (te (basis x) (basis y))) (g (te (basis x') (basis y'))))
+
+
 -- -- HasBasis => FreeModule
 -- class (Functor f, Monad f) => FreeModule f where
 --   unique :: (Module m) => (a -> f a) -> m -> (a -> m) -> f a -> m
