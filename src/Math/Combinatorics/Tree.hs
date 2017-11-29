@@ -28,7 +28,7 @@ import Math.Algebra.Ring
 data MK c = I | MK c (MK c) (MK c)
 
 
-class (Collection (Forrest t), t ~ Element (Forrest t)) => Tree t where
+class (Collection (Forrest t), t ~ Element (Forrest t), MultiplicativeMonoid (Forrest t)) => PlanarTree t where
   type Node t
   type Forrest t
   root :: t -> Node t
@@ -37,15 +37,23 @@ class (Collection (Forrest t), t ~ Element (Forrest t)) => Tree t where
   -- value(node(e, f)) = e
   -- children(node(e, f)) = f
 
-bminus :: (Tree t) => t -> Forrest t
+class (PlanarTree t, CommutativMonoid (Forrest t)) => NonPlanarTree t where
+
+
+
+bminus :: (PlanarTree t) => t -> Forrest t
 bminus = children
 
-bplus :: (Tree t) => Node t -> Forrest t -> t
+bplus :: (PlanarTree t) => Node t -> Forrest t -> t
 bplus = node
 
 data TreeD c = TreeD c [TreeD c] deriving (Show, Eq)
 
-instance (Eq c) => Tree (TreeD c) where
+instance MultiplicativeMonoid [a] where
+  u = []
+  xs * ys = xs ++ ys
+
+instance (Eq c) => PlanarTree (TreeD c) where
   type Node (TreeD c) = c
   type Forrest (TreeD c) = [TreeD c]
   root (TreeD x _) = x
