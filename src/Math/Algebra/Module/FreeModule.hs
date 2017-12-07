@@ -22,12 +22,12 @@ import Math.Algebra.Group
 import Math.Algebra.Module
 import Math.Algebra.Ring
 import Text.Show (Show (..))
-import GHC.Base (Eq (..), Ord (..), Ordering (..), Maybe (..), ($), (++), Bool (..), map, otherwise)
+import GHC.Base (Eq (..), Ord (..), Functor(..), (.), Ordering (..), Maybe (..), ($), (++), Bool (..), map, otherwise)
 import Data.List (head, lookup)
 
-newtype FreeModule k b = FM [(b,k)]
+newtype FModule k b = FM [(b,k)]
 
-instance (Show k, Eq k, Show b) => Show (FreeModule k b) where
+instance (Show k, Eq k, Show b) => Show (FModule k b) where
     show (FM []) = "0"
     show (FM ts) = concatWithPlus $ map showTerm ts
         where showTerm (b,x) | show b == "1" = show x
@@ -45,14 +45,14 @@ instance (Show k, Eq k, Show b) => Show (FreeModule k b) where
               isAtomic' (c:cs) = isAtomic' cs
               isAtomic' [] = True
 
-instance (CommutativeRing k ,Ord b, Eq k) => AddidtativeMonoid (FreeModule k b) where
+instance (CommutativeRing k ,Ord b, Eq k) => AddidtativeMonoid (FModule k b) where
   zero = zerov
   (+) = add
 
-zerov :: FreeModule k b
+zerov :: FModule k b
 zerov = FM []
 
-add :: (Eq k, Ord b, AddidtativeMonoid k) => FreeModule k b -> FreeModule k b -> FreeModule k b
+add :: (Eq k, Ord b, AddidtativeMonoid k) => FModule k b -> FModule k b -> FModule k b
 add (FM ts) (FM us) = FM $ addmerge ts us where
   addmerge ((a,x):ts) ((b,y):us) =
     case compare a b of
@@ -62,28 +62,22 @@ add (FM ts) (FM us) = FM $ addmerge ts us where
   addmerge ts [] = ts
   addmerge [] us = us
 
-instance (Eq k, CommutativeRing k, Ord b) => AbelianGroup (FreeModule k b) where
+instance (Eq k, CommutativeRing k, Ord b) => AbelianGroup (FModule k b) where
   negate = negatev
 
-negatev :: (Eq k, AbelianGroup k) => FreeModule k b -> FreeModule k b
+negatev :: (Eq k, AbelianGroup k) => FModule k b -> FModule k b
 negatev (FM ts) = FM $ map (\(b,x) -> (b,negate x)) ts
 
-instance (CommutativeRing r, Eq r, Ord b) => Module (FreeModule r b) where
-  type Scalar (FreeModule r b) = r
+instance (CommutativeRing r, Eq r, Ord b) => Module (FModule r b) where
+  type Scalar (FModule r b) = r
   (*>) = smultL
 
-smultL :: (CommutativeRing k, Eq k) => k -> FreeModule k b -> FreeModule k b
+smultL :: (CommutativeRing k, Eq k) => k -> FModule k b -> FModule k b
 smultL k (FM ts) | k == zero = zerov
                  | otherwise = FM [(ei,k*xi) | (ei,xi) <- ts]
 
-instance (CommutativeRing k, Ord b, Eq k) => HasBasis (FreeModule k b) where
-  type Basis (FreeModule k b) = b
-  basis x = FM [(x,u)]
+instance (MultiplicativeMonoid k) => FreeModule (FModule k) where
+  i x = FM [(x,u)]
+  linear f (FM xs) = sum [c *> (f x) | (x,c) <- xs]
   decompose (FM xs) = xs
-  decompose' x b = case lookup b $ decompose x of
-                     Nothing -> zero
-                     Just c -> c
-  linearCombi xs = FM xs
-
-instance (CommutativeRing k, Ord b, Eq k, Ord a) => HasTensorProduct (FreeModule k b) (FreeModule k a) where
-  type Tensor (FreeModule k b) (FreeModule k a) = FreeModule k (b,a)
+  compose xs = FM xs

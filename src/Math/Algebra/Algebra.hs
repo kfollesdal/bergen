@@ -25,12 +25,12 @@ data AlgebraD m = AlgebraD {
   multD :: Tensor m m -> m
   }
 
-class (Module m, HasTensorProduct m m) => Algebra name m where
+class (Module m) => Algebra name m where
   algebra :: name -> AlgebraD m
   unit :: name -> Scalar m -> m
   mult :: name -> Tensor m m -> m
 
-instance (Module m, HasTensorProduct m m) => Algebra (AlgebraD m) m where
+instance (Module m) => Algebra (AlgebraD m) m where
   algebra = \x -> x
   unit (AlgebraD {unitD,..}) = unitD
   mult (AlgebraD {unitD,..}) = multD

@@ -33,15 +33,15 @@ class (Algebra name m, Coalgebra name m, HasTensorProduct m m) => Bialgebra name
   convolution :: name -> (m -> m) -> (m -> m) -> m -> m
   convolution name f g = mult name . tf f g . comult name
 
-instance (HasTensorProduct m m) => Bialgebra (BialgebraD m) m where
+instance (Module m, HasTensorProduct m m) => Bialgebra (BialgebraD m) m where
   bialgebra = \x -> x
 
-instance (Module m, HasTensorProduct m m) => Algebra (BialgebraD m) m where
+instance (Module m) => Algebra (BialgebraD m) m where
   algebra = algebraD
   unit = unitD . algebraD
   mult = multD . algebraD
 
-instance (Module m, HasTensorProduct m m) => Coalgebra (BialgebraD m) m where
+instance (Module m) => Coalgebra (BialgebraD m) m where
   coalgebra = coalgebraD
   counit = counitD . coalgebraD
   comult = comultD . coalgebraD

@@ -25,12 +25,12 @@ data CoalgebraD m = CoalgebraD {
   comultD :: m -> Tensor m m
   }
 
-class (Module m, HasTensorProduct m m) => Coalgebra name m where
+class (Module m) => Coalgebra name m where
   coalgebra :: name -> CoalgebraD m
   counit :: name -> m -> Scalar m
   comult :: name -> m -> Tensor m m
 
-instance (Module m, HasTensorProduct m m) => Coalgebra (CoalgebraD m) m where
+instance (Module m) => Coalgebra (CoalgebraD m) m where
   coalgebra = \x -> x
   counit (CoalgebraD {counitD,..}) = counitD
   comult (CoalgebraD {comultD,..}) = comultD
