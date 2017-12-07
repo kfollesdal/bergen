@@ -48,14 +48,11 @@ class (AbelianGroup m, CommutativeRing (Scalar m)) => Module m where
   (*>) :: Scalar m -> m -> m
 
 -- FreeModule and hasBasis is the same
-class FreeModule f where
+class (Functor f) => FreeModule f where
   i :: b -> f b
   linear :: (Module (f b), Module m, Scalar (f b) ~ Scalar m) => (b -> m) -> f b -> m
   decompose :: (Module (f b)) => f b -> [(b, Scalar (f b))]
   compose :: (Module (f b)) => [(b, Scalar (f b))] -> f b
-
--- instance (FreeModule f, Module (f a), Module (f b), Scalar (f a) ~ Scalar (f b)) => Functor f where
---   fmap f = linear (i.f)
 
 bilinear :: (FreeModule f, Module l, Module (f a), Module (f b), Scalar (f a) ~ Scalar l, Scalar (f b) ~ Scalar l) => (a -> b -> l) -> (f a -> f b -> l)
 bilinear g xs ys = linear (\x -> linear (g x) ys ) xs

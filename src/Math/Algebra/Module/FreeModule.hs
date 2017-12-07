@@ -76,6 +76,9 @@ smultL :: (CommutativeRing k, Eq k) => k -> FModule k b -> FModule k b
 smultL k (FM ts) | k == zero = zerov
                  | otherwise = FM [(ei,k*xi) | (ei,xi) <- ts]
 
+instance Functor (FModule k) where
+  fmap m  (FM xs)= FM $ map (\(b,c) -> (m b, c)) xs
+
 instance (MultiplicativeMonoid k) => FreeModule (FModule k) where
   i x = FM [(x,u)]
   linear f (FM xs) = sum [c *> (f x) | (x,c) <- xs]
