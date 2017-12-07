@@ -15,7 +15,9 @@ Description : Implementation of Free Module in Haskell.
 Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
-module Math.Algebra.Module.FreeModule where
+module Math.Algebra.Module.FreeModule (
+  FModule (..)
+) where
 
 import Math.Algebra.Monoid
 import Math.Algebra.Group
