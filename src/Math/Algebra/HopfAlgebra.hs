@@ -4,9 +4,11 @@
 
 {-# LANGUAGE
     MultiParamTypeClasses,
+    TypeFamilies,
     FlexibleInstances,
     NamedFieldPuns,
-    RecordWildCards
+    RecordWildCards,
+    UndecidableInstances
 #-}
 
 {-|
@@ -31,19 +33,19 @@ class HopfAlgebra name m where
   hopfAlgebra :: name -> HopfAlgebraD m
   antipode :: name -> m -> m
 
-instance (Module m, HasTensorProduct m m) => HopfAlgebra (HopfAlgebraD m) m where
+instance (Module m, HasTensorProduct m m, m ~ n) => HopfAlgebra (HopfAlgebraD m) n where
   hopfAlgebra = \x -> x
   antipode (HopfAlgebraD {antipodeD,..}) = antipodeD
 
-instance (Module m, HasTensorProduct m m) => Algebra (HopfAlgebraD m) m where
+instance (Module m, HasTensorProduct m m, m ~ n) => Algebra (HopfAlgebraD m) n where
   algebra = algebra . bialgebraD
   unit = unit . bialgebraD
   mult = mult . bialgebraD
 
-instance (Module m, HasTensorProduct m m) => Coalgebra (HopfAlgebraD m) m where
+instance (Module m, HasTensorProduct m m, m ~ n) => Coalgebra (HopfAlgebraD m) n where
   coalgebra = coalgebra . bialgebraD
   counit = counit . bialgebraD
   comult = comult . bialgebraD
 
-instance (Module m, HasTensorProduct m m) => Bialgebra (HopfAlgebraD m) m where
+instance (Module m, HasTensorProduct m m, m ~ n) => Bialgebra (HopfAlgebraD m) n where
   bialgebra = bialgebraD

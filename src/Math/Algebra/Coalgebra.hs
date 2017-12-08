@@ -4,6 +4,7 @@
 
 {-# LANGUAGE
     NoImplicitPrelude,
+    TypeFamilies,
     MultiParamTypeClasses,
     FlexibleInstances,
     NamedFieldPuns,
@@ -30,7 +31,7 @@ class (Module m) => Coalgebra name m where
   counit :: name -> m -> Scalar m
   comult :: name -> m -> Tensor m m
 
-instance (Module m) => Coalgebra (CoalgebraD m) m where
+instance (Module m, m ~ n) => Coalgebra (CoalgebraD m) n where
   coalgebra = \x -> x
   counit (CoalgebraD {counitD,..}) = counitD
   comult (CoalgebraD {comultD,..}) = comultD

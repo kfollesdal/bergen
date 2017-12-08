@@ -4,6 +4,7 @@
 
 {-# LANGUAGE
     NoImplicitPrelude,
+    TypeFamilies,
     MultiParamTypeClasses,
     FlexibleInstances,
     NamedFieldPuns,
@@ -30,7 +31,7 @@ class (Module m) => Algebra name m where
   unit :: name -> Scalar m -> m
   mult :: name -> Tensor m m -> m
 
-instance (Module m) => Algebra (AlgebraD m) m where
+instance (Module m, m ~ n) => Algebra (AlgebraD m) n where
   algebra = \x -> x
   unit (AlgebraD {unitD,..}) = unitD
   mult (AlgebraD {unitD,..}) = multD
