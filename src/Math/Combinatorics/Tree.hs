@@ -39,26 +39,30 @@ class (Collection (Forrest t), t ~ Element (Forrest t), MultiplicativeMonoid (Fo
 
 class (PlanarTree t, CommutativMonoid (Forrest t)) => NonPlanarTree t where
 
-
-
 bminus :: (PlanarTree t) => t -> Forrest t
 bminus = children
 
 bplus :: (PlanarTree t) => Node t -> Forrest t -> t
 bplus = node
 
-data TreeD c = TreeD c [TreeD c] deriving (Show, Eq)
+data TreeD p c = TreeD c [TreeD p c] deriving (Show, Eq)
 
 instance MultiplicativeMonoid [a] where
   u = []
   xs * ys = xs ++ ys
 
-instance (Eq c) => PlanarTree (TreeD c) where
-  type Node (TreeD c) = c
-  type Forrest (TreeD c) = [TreeD c]
+instance (Eq c) => PlanarTree (TreeD p c) where
+  type Node (TreeD p c) = c
+  type Forrest (TreeD p c) = [TreeD p c]
   root (TreeD x _) = x
   children (TreeD _ xs) = xs
   node x xs = TreeD x xs
+
+data NonPlanar
+
+--instance Ord (TreeD p c) where
+
+
 
 
 -- class (Collection f, Tree (Element f)) => Forrest f where
@@ -88,16 +92,3 @@ instance (Eq c) => PlanarTree (TreeD c) where
 --
 -- data MK c = I | MK {root:: c, left:: MK c, rigth :: MK c} deriving (Eq, Ord, Show)
 --
--- -- class GraftingProduct f where
--- --   graft_, (⊵) :: f → f → FreeModule k f
--- --   graft :: (FreeModule k f) ⨂ (FreeModule k f) → FreeModule k f
--- --   graft = tensorBilinear graft_
--- --   graft', (▷) :: FreeModule k f → FreeModule k f → FreeModule k f
--- --   graft' = bilinear graft_
--- --
--- -- instance (Forrest f) ⇒ GraftingProduct f where
--- --   graft_ (isEmpty -> True) w = lift w
--- --   graft_ w (isEmpty -> True) = zero
--- --   graft_ t@(isTree -> True) (mkSplit -> (c, l, r)) =
--- --     mk c (t ⊵ l) (lift r) + mk c (lift l) (lift (u⋅r) + t ⊵ r)
--- --   graft_ (headTail -> (t,f)) w = (lift t) ▷ (f ⊵ w) - (t ⊵ f) ▷ (lift w)
