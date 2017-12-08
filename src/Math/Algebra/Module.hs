@@ -35,7 +35,8 @@ module Math.Algebra.Module (
 
   -- * Tensor
   Tensor,
-  HasTensorProduct (..)
+  HasTensorProduct (..),
+  te_
 ) where
 
 import Math.Algebra.Ring (CommutativeRing)
