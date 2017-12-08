@@ -1,4 +1,10 @@
+{-# LANGUAGE
+    NoImplicitPrelude
+#-}
+
 module Math.TEMP.HasEmpty where
+
+import GHC.Base (Eq (..), Bool (..), otherwise)
 
 class (Eq e) => HasEmpty e where
   empty :: e

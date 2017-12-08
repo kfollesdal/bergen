@@ -1,4 +1,5 @@
 {-# LANGUAGE
+    NoImplicitPrelude,
     TypeFamilies
 #-}
 
@@ -6,6 +7,7 @@ module Math.TEMP.Collection where
 
 import Math.TEMP.HasEmpty
 import Math.TEMP.Enumerable
+import GHC.Base (Eq (..))
 
 class (HasEmpty c) => Collection c where
   type Element c
