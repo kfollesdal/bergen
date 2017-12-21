@@ -39,6 +39,7 @@ import GHC.Integer (Integer, timesInteger, plusInteger)
 import qualified GHC.Num as N ((+),(*))
 import GHC.Int (Int)
 import Data.List (foldr)
+import GHC.Base ((++))
 
 -- | A monoid ('m','*','e')  with '*' as monoid operation. Must satisfy the
 -- following properties:
@@ -63,6 +64,11 @@ instance MultiplicativeMonoid Integer where
 instance MultiplicativeMonoid Int where
   u = 1
   (*) = (N.*)
+
+instance MultiplicativeMonoid [a] where
+  u = []
+  xs * ys = xs ++ ys
+
 
 
 -- | A 'MultiplicativeMonoid' is a commutative monoid if:
