@@ -16,7 +16,7 @@ Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
 -}
 
 module Math.Algebra.Module.FreeModule (
-  FModule (..)
+  FModule, lcomb
 ) where
 
 import Math.Algebra.Monoid
@@ -25,7 +25,7 @@ import Math.Algebra.Module
 import Math.Algebra.Ring
 import Text.Show (Show (..))
 import GHC.Base (Eq (..), Ord (..), Functor(..), (.), Ordering (..), Maybe (..), ($), (++), Bool (..), map, otherwise)
-import Data.List (head, lookup)
+import Data.List (head, lookup, sortBy)
 
 newtype FModule k b = FM [(b,k)]
 
@@ -78,11 +78,17 @@ smultL :: (CommutativeRing k, Eq k) => k -> FModule k b -> FModule k b
 smultL k (FM ts) | k == zero = zerov
                  | otherwise = FM [(ei,k*xi) | (ei,xi) <- ts]
 
+
+-- remember nf is fmap change order
 instance Functor (FModule k) where
   fmap m  (FM xs)= FM $ map (\(b,c) -> (m b, c)) xs
 
 instance (MultiplicativeMonoid k) => FreeModule (FModule k) where
   i x = FM [(x,u)]
-  linear f (FM xs) = sum [c *> (f x) | (x,c) <- xs]
+  linear f (FM xs) = sum [c *> f x | (x,c) <- xs]
   decompose (FM xs) = xs
-  compose xs = FM xs
+  compose xs = linear i (FM (sortBy (\(x,_) (y,_) -> compare x y) xs))
+
+-- compose withoiut type argument, to use in ghci
+lcomb :: (CommutativeRing k, Ord b, Eq k) => [(b, Scalar (FModule k b))] -> FModule k b
+lcomb = compose
