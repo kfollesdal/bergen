@@ -42,7 +42,7 @@ module Math.Algebra.Module (
 import Math.Algebra.Ring (CommutativeRing)
 import Math.Algebra.Group (AbelianGroup)
 import Math.Algebra.Monoid ((*), sum)
-import GHC.Base (Functor (..), (.))
+import GHC.Base (Functor (..), (.), Ord)
 
 class (AbelianGroup m, CommutativeRing (Scalar m)) => Module m where
   type Scalar m :: *
@@ -53,7 +53,8 @@ class (Functor f) => FreeModule f where
   i :: b -> f b
   linear :: (Module (f b), Module m, Scalar (f b) ~ Scalar m) => (b -> m) -> f b -> m
   decompose :: (Module (f b)) => f b -> [(b, Scalar (f b))]
-  compose :: (Module (f b)) => [(b, Scalar (f b))] -> f b
+  -- compose put on normalform
+  compose :: (Module (f b), Ord b) => [(b, Scalar (f b))] -> f b
 
 bilinear :: (FreeModule f, Module l, Module (f a), Module (f b), Scalar (f a) ~ Scalar l, Scalar (f b) ~ Scalar l) => (a -> b -> l) -> (f a -> f b -> l)
 bilinear g xs ys = linear (\x -> linear (g x) ys ) xs
