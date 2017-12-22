@@ -30,7 +30,9 @@ library
                        Math.TEMP.Collection
                        Math.TEMP.HasEmpty
                        Math.TEMP.Enumerable
-                       Math.TEMP.FreeMonoid
+                       --Math.TEMP.FreeMonoid
+                       Math.Algebra.Algebras.MonoidAlgebra
+                       Math.Combinatorics.Tree.Operations
   build-depends:       base >= 4.7 && < 5
                        , integer-gmp
                        , leancheck
