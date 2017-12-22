@@ -19,5 +19,5 @@ instance (Eq a) => Collection [a] where
   type Element [a] = a
   insert x ce = x:ce
 
-class (Enumerable c, Collection c) => EnumerableCollection c where
-  toList :: c -> [Element c]
+-- class (Enumerable c, Collection c) => EnumerableCollection c where
+--   toList :: c -> [Element c]
