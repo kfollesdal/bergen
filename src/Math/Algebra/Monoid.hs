@@ -5,7 +5,9 @@
 -- @ Multiplicative, Additative and Commutative monoid for functions a -> a
 
 {-# LANGUAGE
-  NoImplicitPrelude
+  NoImplicitPrelude,
+  FlexibleInstances,
+  UndecidableInstances
 #-}
 
 {-|
@@ -36,7 +38,7 @@ module Math.Algebra.Monoid (
   ) where
 
 import GHC.Integer (Integer, timesInteger, plusInteger)
-import qualified GHC.Num as N ((+),(*))
+import qualified GHC.Num as N (Num, (+),(*))
 import GHC.Int (Int)
 import Data.List (foldr)
 import GHC.Base ((++))
@@ -57,13 +59,17 @@ class MultiplicativeMonoid m where
 product :: (MultiplicativeMonoid m) => [m] -> m
 product = foldr (*) u
 
-instance MultiplicativeMonoid Integer where
-  u = 1
-  (*) = timesInteger
-
-instance MultiplicativeMonoid Int where
+instance {-# OVERLAPPABLE #-} (N.Num k) => MultiplicativeMonoid k where
   u = 1
   (*) = (N.*)
+
+-- instance MultiplicativeMonoid Integer where
+--   u = 1
+--   (*) = timesInteger
+--
+-- instance MultiplicativeMonoid Int where
+--   u = 1
+--   (*) = (N.*)
 
 instance MultiplicativeMonoid [a] where
   u = []
@@ -76,8 +82,10 @@ instance MultiplicativeMonoid [a] where
 -- prop> x * y = y * x
 class (MultiplicativeMonoid m) => CommutativMonoid m where
 
-instance CommutativMonoid Integer
-instance CommutativMonoid Int
+instance {-# OVERLAPPABLE #-} (N.Num k) => CommutativMonoid k
+
+-- instance CommutativMonoid Integer
+-- instance CommutativMonoid Int
 
 
 -- | A commutative monoid (m,'+','zero') with '+' as monoid operation. Must
@@ -97,10 +105,14 @@ class AddidtativeMonoid m where
 sum :: (AddidtativeMonoid c) => [c] -> c
 sum = foldr (+) zero
 
-instance AddidtativeMonoid Integer where
-  zero = 0
-  (+) = plusInteger
-
-instance AddidtativeMonoid Int where
+instance {-# OVERLAPPABLE #-} (N.Num k) => AddidtativeMonoid k where
   zero = 0
   (+) = (N.+)
+
+-- instance AddidtativeMonoid Integer where
+--   zero = 0
+--   (+) = plusInteger
+--
+-- instance AddidtativeMonoid Int where
+--   zero = 0
+--   (+) = (N.+)

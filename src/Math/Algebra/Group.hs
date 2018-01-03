@@ -23,8 +23,7 @@ module Math.Algebra.Group  (
 ) where
 
 import Math.Algebra.Monoid
-import GHC.Integer (Integer, negateInteger)
-import qualified GHC.Num as N (negate)
+import qualified GHC.Num as N (Num, negate)
 import GHC.Int (Int)
 
 class (MultiplicativeMonoid g) => Group g where
@@ -39,8 +38,11 @@ class (AddidtativeMonoid a) => AbelianGroup a where
   (-) :: a -> a -> a
   x - y = x + (negate y)
 
-instance AbelianGroup Integer where
-  negate = negateInteger
-
-instance AbelianGroup Int where
+instance {-# OVERLAPPABLE #-} (N.Num k) => AbelianGroup k where
   negate = (N.negate)
+
+-- instance AbelianGroup Integer where
+--   negate = negateInteger
+--
+-- instance AbelianGroup Int where
+--   negate = (N.negate)
