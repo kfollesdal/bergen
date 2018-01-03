@@ -1,5 +1,5 @@
 -- TODO
--- @ Add test for mproduxt and sum
+-- @ Add test for mproduct and sum
 -- @ Change u to one?
 -- @ Replace * with ⋅
 -- @ Multiplicative, Additative and Commutative monoid for functions a -> a
