@@ -4,9 +4,22 @@
 -- @ Check ordering for NonPlanarTree
 -- Use Planar or Ordered for forests?
 
-{-# LANGUAGE NoImplicitPrelude, UnicodeSyntax, TypeFamilies,
-  FlexibleInstances, MultiParamTypeClasses, FlexibleContexts,
-  TypeOperators, FunctionalDependencies, TypeFamilyDependencies, UndecidableInstances, ViewPatterns #-}
+{-# LANGUAGE
+  NoImplicitPrelude,
+  ViewPatterns,
+  TypeFamilies,
+  MultiParamTypeClasses,
+  FunctionalDependencies,
+  TypeSynonymInstances,
+  FlexibleInstances,
+  UndecidableInstances
+#-}
+
+{-|
+Module      : Math.Combinatorics.Tree
+Description : Trees, planar and nonplanar.
+Maintainer  : Kristoffer K. Føllesdal <kfollesdal@gmail.com>
+-}
 
 -- FreeModule Monad
 -- change name basis to lift
@@ -25,41 +38,27 @@ import Math.Algebra.Monoid
 -- import Math.TEMP.FreeMonoid
 import Math.Algebra.Ring
 
-class Split a b | a -> b where
-  split :: a -> b
-
-class Size a where
-  size :: a -> Int
-
-class Height a where
-  height :: a -> Int
-
-class ToList a b where
-  toList :: a -> [b]
-
-
--- type family Forest t = f | f -> t where
---   Forest (PlanarTree n) = [PlanarTree n]
---   Forest (NonPlanarTree n) = [NonPlanarTree n]
-
 class Tree t where
   type Node t :: *
   root :: t -> Node t
   branches :: t -> Forest t
   join :: Node t -> Forest t -> t
 
-instance (Tree t, r ~ Node t) => Split t (r, Forest t) where
-  split x = (root x, branches x)
+  -- value(node(e, f)) = e
+  -- children(node(e, f)) = f
+
+cut :: (Tree t, r ~ Node t) => t -> (r, Forest t)
+cut x = (root x, branches x)
 
 instance (Tree t) => Size t where
   size x = 1 + sum (map size (branches x))
 
 instance (Tree t, Eq t) => Height t where
   height (isEmpty.branches -> True) = 1
-  height (split -> (x,xs)) = 1 + maximum (map height xs)
+  height (cut -> (x,xs)) = 1 + maximum (map height xs)
 
 instance (u ~ Node t, Tree t) => ToList t u where
-  toList (split -> (x,xs)) = x : concatMap toList xs
+  toList (cut -> (x,xs)) = x : concatMap toList xs
 
 -- Forest
 type Forest t = [t]
@@ -69,8 +68,6 @@ isTree x = length x == 1
 
 -- Planar
 data PlanarTree n = Root n [PlanarTree n] deriving (Show, Eq)
--- value(node(e, f)) = e
--- children(node(e, f)) = f
 
 instance Tree (PlanarTree n) where
   type Node (PlanarTree n) = n
@@ -78,7 +75,7 @@ instance Tree (PlanarTree n) where
   branches (Root x xs) = xs
   join = Root
 
--- Order by left grafitng. Check it. 
+-- Order by left grafitng. Check it.
 instance (Eq n, Ord n) => Ord (PlanarTree n) where
   compare x y = case compare (size x) (size y) of
     LT -> LT
@@ -217,3 +214,27 @@ instance (Ord n) => NormalForm (Forest (NonPlanarTree n)) where
 -- --
 -- -- mk :: (OrderedForrest f, CommutativeRing k, Eq k, Ord f) => Node(Element f) -> FreeModule k f -> FreeModule k f -> FreeModule k f
 -- -- mk c = bilinear (\x y -> basis (mk_ c x y))
+
+
+
+
+
+
+
+---------------------
+-- class Split a b | a -> b where
+--   split :: a -> b
+
+class Size a where
+  size :: a -> Int
+
+class Height a where
+  height :: a -> Int
+
+class ToList a b where
+  toList :: a -> [b]
+
+
+-- type family Forest t = f | f -> t where
+--   Forest (PlanarTree n) = [PlanarTree n]
+--   Forest (NonPlanarTree n) = [NonPlanarTree n]
