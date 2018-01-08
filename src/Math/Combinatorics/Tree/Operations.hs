@@ -21,7 +21,7 @@ import Data.List (sortBy, map)
 import Data.Ord
 
 type ModuleForest k t = FModule k (Forest t)
-type ModuleOrdForest k n = FModule k (OrderedForest n)
+type ModuleOrdForest k n = FModule k (PlanarForest n)
 
 mk :: (Eq n, Eq k, Ord n, CommutativeRing k) => n -> ModuleOrdForest k n -> ModuleOrdForest k n -> ModuleOrdForest k n
 mk c = bilinear (\x y -> i (mk_ c x y))

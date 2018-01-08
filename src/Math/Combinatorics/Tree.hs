@@ -57,15 +57,7 @@ instance (Tree t, Eq t) => Height t where
 instance (u ~ Node t, Tree t) => ToList t u where
   toList (cut -> (x,xs)) = x : concatMap toList xs
 
--- Forest
-type Forest t = [t]
-type OrderedForest n = Forest (PlanarTree n)
-type NonPlanarForest n = Forest (NonPlanarTree n)
-
-isTree :: (Tree t) => Forest t -> Bool
-isTree x = length x == 1
-
--- Planar
+-- PLANAR TREES
 data PlanarTree n = R n (Forest (PlanarTree n)) deriving (Show, Eq)
 
 instance Tree (PlanarTree n) where
@@ -74,7 +66,7 @@ instance Tree (PlanarTree n) where
   branches (R x xs) = xs
   join = R
 
--- Order by left grafitng.
+-- Planar trees are order by left grafitng.
 instance (Eq n, Ord n) => Ord (PlanarTree n) where
   compare x y = case compare (size x) (size y) of
     LT -> LT
@@ -92,7 +84,7 @@ instance (Eq n, Ord n) => Ord (PlanarTree n) where
                   LT -> GT
                   GT -> LT
 
--- NonPlanar
+-- NONPLANAR TREES
 newtype NonPlanarTree n = NP {getPlanar :: PlanarTree n}
 
 instance Tree (NonPlanarTree n) where
@@ -119,26 +111,31 @@ instance {-# OVERLAPPING #-} (Eq n, Ord n) => Eq (Forest (NonPlanarTree n)) wher
 instance {-# OVERLAPPING #-} (Ord n) => Ord (Forest (NonPlanarTree n)) where
   compare xs ys = compare (sort (map (planar.nf) xs)) (sort (map (planar.nf) ys))
 
--- OrderedForest
-type OrderedForest n = Forest (PlanarTree n)
+-- FOREST
+type Forest t = [t]
+type PlanarForest n = Forest (PlanarTree n)
+type NonPlanarForest n = Forest (NonPlanarTree n)
+
+isTree :: (Tree t) => Forest t -> Bool
+isTree x = length x == 1
 
 -- -- Munte-Kaas product for ordered forests
 -- -- Make [a] free monoid and use i insted of singelton, make class free.
-mk_ :: (Eq n) => n -> OrderedForest n -> OrderedForest n  -> OrderedForest n
+mk_ :: (Eq n) => n -> PlanarForest n -> PlanarForest n  -> PlanarForest n
 mk_ x fs gs = fs * singelton (join x gs)
 
 -- Does not work for empty forrest
-mkRoot :: OrderedForest n -> n
+mkRoot :: PlanarForest n -> n
 mkRoot = root . last
 
-mkLeft :: OrderedForest n -> OrderedForest n
+mkLeft :: PlanarForest n -> PlanarForest n
 mkLeft [] = []
 mkLeft xs = init xs
 
-mkRigth :: (Eq n) => OrderedForest n -> OrderedForest n
+mkRigth :: (Eq n) => PlanarForest n -> PlanarForest n
 mkRigth xs = branches $ last xs -- singelton -> i, after [a] is free. can then remove Eq n
 
-mkSplit :: (Eq n) => OrderedForest n -> (n, OrderedForest n, OrderedForest n) -- Remove Eq n when remov Eq n from mkRigth
+mkSplit :: (Eq n) => PlanarForest n -> (n, PlanarForest n, PlanarForest n) -- Remove Eq n when remov Eq n from mkRigth
 mkSplit xs = (mkRoot xs, mkLeft xs, mkRigth xs)
 
 
@@ -161,7 +158,7 @@ instance Planar (NonPlanarTree n) (PlanarTree n) where
   planar (NP x) = x
 
 -- Can not have type family in class instance
-instance Planar [NonPlanarTree n] [PlanarTree n] where
+instance Planar (NonPlanarForest n) (PlanarForest n) where
   planar = map planar
 
 
@@ -180,7 +177,7 @@ class NonPlanarFun a b | a -> b where
 instance NonPlanarFun (PlanarTree n) (NonPlanarTree n) where
   nonplanar = NP
 
-instance NonPlanarFun (Forest (PlanarTree n)) (Forest (NonPlanarTree n)) where
+instance NonPlanarFun (PlanarForest n) (NonPlanarForest n) where
   nonplanar = map nonplanar
 
 
@@ -193,9 +190,9 @@ instance (Ord n) => NormalForm (PlanarTree n) where
   nf (R n fs) = R n (sort (map nf fs))
 
 instance (Ord n) => NormalForm (NonPlanarTree n) where
-  nf (NP (R n fs)) = NP (R n (sort (map nf fs)))
+  nf (NP t) = NP (nf t)
 
-instance (Ord n) => NormalForm (Forest (NonPlanarTree n)) where
+instance (NormalForm t, Ord t) => NormalForm [t] where
   nf xs = (sort (map nf xs))
 
 
