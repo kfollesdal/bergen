@@ -1,8 +1,8 @@
 -- TODO
 -- @ List is not a good data type for forest. Not effective to pick out last element
 --   e.g mkRoot and mkRigth.
--- @ Check ordering for NonPlanarTree
--- Use Planar or Ordered for forests?
+-- @ Check ordering for Planar and NonPlanarTree
+-- @ Use Planar or Ordered for forests?
 
 {-# LANGUAGE
   NoImplicitPrelude,
@@ -44,9 +44,6 @@ class Tree t where
   branches :: t -> Forest t
   join :: Node t -> Forest t -> t
 
-  -- value(node(e, f)) = e
-  -- children(node(e, f)) = f
-
 cut :: (Tree t, r ~ Node t) => t -> (r, Forest t)
 cut x = (root x, branches x)
 
@@ -62,20 +59,22 @@ instance (u ~ Node t, Tree t) => ToList t u where
 
 -- Forest
 type Forest t = [t]
+type OrderedForest n = Forest (PlanarTree n)
+type NonPlanarForest n = Forest (NonPlanarTree n)
 
 isTree :: (Tree t) => Forest t -> Bool
 isTree x = length x == 1
 
 -- Planar
-data PlanarTree n = Root n [PlanarTree n] deriving (Show, Eq)
+data PlanarTree n = R n (Forest (PlanarTree n)) deriving (Show, Eq)
 
 instance Tree (PlanarTree n) where
   type Node (PlanarTree n) = n
-  root (Root x xs) = x
-  branches (Root x xs) = xs
-  join = Root
+  root (R x xs) = x
+  branches (R x xs) = xs
+  join = R
 
--- Order by left grafitng. Check it.
+-- Order by left grafitng.
 instance (Eq n, Ord n) => Ord (PlanarTree n) where
   compare x y = case compare (size x) (size y) of
     LT -> LT
@@ -100,7 +99,7 @@ instance Tree (NonPlanarTree n) where
   type Node (NonPlanarTree n) = n
   root = root . getPlanar
   branches = map NP . branches . getPlanar
-  join x xs = NP (Root x (map planar xs))
+  join x xs = NP (R x (map planar xs))
 
 instance (Eq n, Ord n) => Eq (NonPlanarTree n) where
   x == y = planar (nf x) == planar (nf y)
@@ -114,13 +113,10 @@ instance (Ord n) => Ord (NonPlanarTree n) where
       GT -> LT
       EQ -> compare (branches x) (branches y)
 
--- instance (Ord n) => NormalForm (NonPlanarTree n) where
---   nf (NP (Root x xs)) = NP (Root x (sort xs))
-
-instance {-# OVERLAPPING #-} (Eq n, Ord n) => Eq [NonPlanarTree n] where
+instance {-# OVERLAPPING #-} (Eq n, Ord n) => Eq (Forest (NonPlanarTree n)) where
   xs == ys = sort (map (planar.nf) xs) == sort (map (planar.nf) ys)
 
-instance {-# OVERLAPPING #-} (Ord n) => Ord [NonPlanarTree n] where
+instance {-# OVERLAPPING #-} (Ord n) => Ord (Forest (NonPlanarTree n)) where
   compare xs ys = compare (sort (map (planar.nf) xs)) (sort (map (planar.nf) ys))
 
 -- OrderedForest
@@ -130,7 +126,6 @@ type OrderedForest n = Forest (PlanarTree n)
 -- -- Make [a] free monoid and use i insted of singelton, make class free.
 mk_ :: (Eq n) => n -> OrderedForest n -> OrderedForest n  -> OrderedForest n
 mk_ x fs gs = fs * singelton (join x gs)
-
 
 -- Does not work for empty forrest
 mkRoot :: OrderedForest n -> n
@@ -195,10 +190,10 @@ class NormalForm a where
   nf :: a -> a
 
 instance (Ord n) => NormalForm (PlanarTree n) where
-  nf (Root n fs) = Root n (sort (map nf fs))
+  nf (R n fs) = R n (sort (map nf fs))
 
 instance (Ord n) => NormalForm (NonPlanarTree n) where
-  nf (NP (Root n fs)) = NP (Root n (sort (map nf fs)))
+  nf (NP (R n fs)) = NP (R n (sort (map nf fs)))
 
 instance (Ord n) => NormalForm (Forest (NonPlanarTree n)) where
   nf xs = (sort (map nf xs))

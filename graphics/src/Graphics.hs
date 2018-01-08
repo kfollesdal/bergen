@@ -20,7 +20,7 @@ import Math.Algebra.Module (FreeModule (..))
 import Math.Algebra.Ring
 
 toHaskellTree :: PlanarTree n -> Data.Tree.Tree n
-toHaskellTree (Root n xs) = Data.Tree.Node n (map toHaskellTree xs)
+toHaskellTree (R n xs) = Data.Tree.Node n (map toHaskellTree xs)
 
 type Colors = Colour Double
 
